@@ -62,3 +62,20 @@ def load_symmetric_key(file_name: str) -> bytes:
         logging.warning(f' Ошибка при чтении симметричного ключа из файла {file_name}\n{err}')
     return key
 
+def read_text(file_name: str) -> bytes:
+    try:
+        with open(file_name, mode='rb') as text_file:
+            text = text_file.read()
+        logging.info(f' Файл {file_name} прочитан')
+    except OSError as err:
+        logging.warning(f' Ошибка при чтении файла {file_name}\n{err}')
+    return text
+
+
+def write_text(text: bytes, file_name: str) -> None:
+    try:
+        with open(file_name, mode='wb') as text_file:
+            text_file.write(text)
+        logging.info(f' Текст записан в файл {file_name}')
+    except OSError as err:
+        logging.warning(f' Ошибка при записи в файл {file_name}\n{err}')
