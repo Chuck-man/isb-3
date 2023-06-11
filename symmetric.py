@@ -33,7 +33,7 @@ def encrypt_symmetric(key: bytes, text: bytes) -> bytes:
 
 def encrypt_symmetric(key: bytes, cipher_text: bytes):
     
-    
+    iv = os.urandom(8)
     cipher = Cipher(algorithms.CAST5(key), modes.CBC(iv))
 
     decryptor = cipher.decryptor()
