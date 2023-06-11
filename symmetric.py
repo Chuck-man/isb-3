@@ -31,7 +31,7 @@ def encrypt_symmetric(key: bytes, text: bytes) -> bytes:
         ' Текст зашифрован алгоритмом симметричного шифрования CAST5')
     return iv + cipher_text
 
-def encrypt_symmetric(key: bytes, cipher_text: bytes):
+def dencrypt_symmetric(key: bytes, cipher_text: bytes):
     
     iv = os.urandom(8)
     cipher = Cipher(algorithms.CAST5(key), modes.CBC(iv))
