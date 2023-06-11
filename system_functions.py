@@ -40,3 +40,25 @@ def save_asymmetric_keys(private_key, public_key, private_pem: str, public_pem: 
         logging.info(f' Открытый ключ успешно сохранен в файл {public_pem}')
     except OSError as err:
         logging.warning(f' Ошибка при сохранении открытого ключа в файл {public_pem}\n{err}')
+
+def load_private_key(private_pem: str):
+    private_key = None
+    try:
+        with open(private_pem, 'rb') as pem_in:
+            private_bytes = pem_in.read()
+        private_key = load_pem_private_key(private_bytes, password=None)
+        logging.info(f' Закрытый ключ считан из файла {private_pem}')
+    except OSError as err:
+        logging.warning(f' Ошибка при чтении закрытого ключа из файла {private_pem}\n{err}')
+    return private_key
+
+
+def load_symmetric_key(file_name: str) -> bytes:
+    try:
+        with open(file_name, mode='rb') as key_file:
+            key = key_file.read()
+        logging.info(f' Симметричный ключ считан из файла {file_name}')
+    except OSError as err:
+        logging.warning(f' Ошибка при чтении симметричного ключа из файла {file_name}\n{err}')
+    return key
+
