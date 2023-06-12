@@ -6,6 +6,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 logger = logging.getLogger()
 logger.setLevel('INFO')
 
+
 def load_settings(settings_file: str) -> dict:
     """
     Функция считывает файл настроек
@@ -21,19 +22,6 @@ def load_settings(settings_file: str) -> dict:
         logging.warning(f' Ошибка при чтении настроек из файла {settings_file}\n{err}')
     return settings
 
-def save_symmetric_key(key: bytes, file_name: str) -> None:
-    """
-    Функция сохраняет  ключ для симметричного шифрования
-    :param key: ключ
-    :param file_name: название файла ключа
-    :return: None
-    """
-    try:
-        with open(file_name, 'wb') as key_file:
-            key_file.write(key)
-        logging.info(f' Симметричный ключ успешно сохранен в файл {file_name}')
-    except OSError as err:
-        logging.warning(f' Ошибка при сохранении симметричного ключа в файл {file_name}\n{err}')
 
 def save_asymmetric_keys(private_key, public_key, private_pem: str, public_pem: str) -> None:
     """
@@ -59,6 +47,22 @@ def save_asymmetric_keys(private_key, public_key, private_pem: str, public_pem: 
         logging.info(f' Открытый ключ успешно сохранен в файл {public_pem}')
     except OSError as err:
         logging.warning(f' Ошибка при сохранении открытого ключа в файл {public_pem}\n{err}')
+
+
+def save_symmetric_key(key: bytes, file_name: str) -> None:
+    """
+    Функция сохраняет  ключ для симметричного шифрования
+    :param key: ключ
+    :param file_name: название файла ключа
+    :return: None
+    """
+    try:
+        with open(file_name, 'wb') as key_file:
+            key_file.write(key)
+        logging.info(f' Симметричный ключ успешно сохранен в файл {file_name}')
+    except OSError as err:
+        logging.warning(f' Ошибка при сохранении симметричного ключа в файл {file_name}\n{err}')
+
 
 def load_private_key(private_pem: str):
     """
@@ -87,9 +91,11 @@ def load_symmetric_key(file_name: str) -> bytes:
         with open(file_name, mode='rb') as key_file:
             key = key_file.read()
         logging.info(f' Симметричный ключ считан из файла {file_name}')
+        return key
     except OSError as err:
         logging.warning(f' Ошибка при чтении симметричного ключа из файла {file_name}\n{err}')
-    return key
+    
+
 
 def read_text(file_name: str) -> bytes:
     """
