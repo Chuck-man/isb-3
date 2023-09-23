@@ -36,8 +36,8 @@ class HybridAlgorithm:
     def decryption(self) -> None:
         private_key = self.asymmetric.reading_private_key(self.settings['private_key'])
         encrypted_key = self.symmetric.reading_symmetric_key(self.settings['symmetric_key'])
-        symmetric_ley = self.asymmetric.asymmetric_key_decryption(private_key, encrypted_key)
-        self.symmetric.symmetric_decryption(symmetric_ley, self.settings['encrypted_file'], self.settings['decrypted_file'])
+        symmetric_key = self.asymmetric.asymmetric_key_decryption(private_key, encrypted_key)
+        self.symmetric.symmetric_decryption(symmetric_key, self.settings['encrypted_file'], self.settings['decrypted_file'])
     
 if __name__ == "__main__":
     result = HybridAlgorithm(SETTINGS_FILE)
