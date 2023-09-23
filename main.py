@@ -20,6 +20,9 @@ class HybridAlgorithm:
         self.asymmetric = asymmetric.AsymmetricAlgorithm(self.settings)
 
     def keys_generation(self) -> None:
+        """
+        Генерация и запись симметричного и ассиметричного ключей
+        """
         symmetric_key = self.symmetric.symmetric_key_generation()
         private_key, public_key = self.asymmetric.asymmetric_keys_generation()
         encrypted_key = self.asymmetric.symmetric_key_encryption(public_key, symmetric_key)
@@ -28,12 +31,18 @@ class HybridAlgorithm:
         logging.info('Все ключи были успешно сгенерированы и записаны')
 
     def encryption(self) -> None:
+        """
+        Шифрование исходного текста
+        """
         private_key = self.asymmetric.reading_private_key(self.settings['private_key'])
         encrypted_key = self.symmetric.reading_symmetric_key(self.settings['symmetric_key'])
         symmetric_key = self.asymmetric.asymmetric_key_decryption(private_key, encrypted_key)
         self.symmetric.symmetric_encryption(symmetric_key, self.settings['text_file'], self.settings['encrypted_file'])
 
     def decryption(self) -> None:
+        """
+        Дешифрование зашифрованного текста
+        """
         private_key = self.asymmetric.reading_private_key(self.settings['private_key'])
         encrypted_key = self.symmetric.reading_symmetric_key(self.settings['symmetric_key'])
         symmetric_key = self.asymmetric.asymmetric_key_decryption(private_key, encrypted_key)
