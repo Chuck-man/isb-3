@@ -3,6 +3,8 @@ import asymmetric
 import logging
 import json
 
+import argparse
+
 SETTINGS_FILE = "files/settings.json"
 
 class HybridAlgorithm:
@@ -50,8 +52,19 @@ class HybridAlgorithm:
     
 if __name__ == "__main__":
     result = HybridAlgorithm(SETTINGS_FILE)
-    result.keys_generation()
-    result.encryption()
-    result.decryption()
+
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-gen', '--generation', action="store_true", help='Запускает режим генерации ключей')
+    group.add_argument('-enc', '--encryption', action="store_true", help='Запускает режим шифрования')
+    group.add_argument('-dec', '--decryption', action="store_true", help='Запускает режим дешифрования')
+    args = parser.parse_args()
+
+    if args.generation:
+        result.keys_generation()
+    elif args.encryption:
+        result.encryption()
+    else:
+        result.decryption()
 
         
